@@ -68,4 +68,20 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.0" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\SpreadsheetLab.Core\SpreadsheetLab.Core.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="HelpPage.xaml.cs">
+	    <DependentUpon>HelpPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="HelpPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 </Project>

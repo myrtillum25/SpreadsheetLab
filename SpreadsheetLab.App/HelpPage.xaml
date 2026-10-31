@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SpreadsheetLab.App.HelpPage"
+             Title="Довідка">
+
+    <Grid RowDefinitions="*,Auto" Padding="24" RowSpacing="12">
+
+        <ScrollView>
+            <VerticalStackLayout Spacing="8" MaximumWidthRequest="900" HorizontalOptions="Start">
+
+                <Label Text="Довідка" FontSize="26" FontAttributes="Bold" />
+
+                <Label Text="Як ввести вираз" FontSize="18" FontAttributes="Bold" Margin="0,12,0,0" />
+                <Label Text="Клацніть на клітинку, введіть вираз і натисніть Enter. Або виберіть клітинку і введіть вираз у рядку над таблицею, потім натисніть «Застосувати». Знак «=» на початку можна не писати." />
+
+                <Label Text="Що можна писати у виразі (варіант 46)" FontSize="18" FontAttributes="Bold" Margin="0,12,0,0" />
+                <Label Text="• Цілі числа будь-якої довжини: 7, 123456789012345678901234567890&#10;• Імена клітинок латиницею: A1, B12, h3&#10;• Дужки: (A1 + 2) * 3&#10;• Арифметика: +  -  *  /  ^  (ділення ціле: 7 / 2 = 3)&#10;• Функції: mmax — найбільше, mmin — найменше&#10;• Порівняння: =  &lt;  &gt;  &lt;=  &gt;=  &lt;&gt;" />
+                <Label Text="Вираз має бути логічним, тобто головна операція — порівняння. Результат: ІСТИНА або ХИБНІСТЬ. Якщо вираз посилається на іншу клітинку, ІСТИНА вважається числом 1, ХИБНІСТЬ і порожня клітинка — числом 0." />
+
+                <Label Text="Приклади" FontSize="18" FontAttributes="Bold" Margin="0,12,0,0" />
+                <Label Text="=5 &gt; 3   →   ІСТИНА&#10;=(2 + 3) * 4 = 20   →   ІСТИНА&#10;=mmax(A1, 5) &gt;= 10   →   ХИБНІСТЬ&#10;=(A1 &gt; 0) + (B1 &gt; 0) &gt;= 1   →   ІСТИНА, якщо істинна A1 або B1" />
+
+                <Label Text="Режими ВИРАЗ / ЗНАЧЕННЯ" FontSize="18" FontAttributes="Bold" Margin="0,12,0,0" />
+                <Label Text="Кнопка «Режим» перемикає, що видно в клітинках: введені вирази або їх значення. У режимі ЗНАЧЕННЯ вираз можна змінити через рядок над таблицею." />
+
+                <Label Text="Помилки" FontSize="18" FontAttributes="Bold" Margin="0,12,0,0" />
+                <Label Text="Клітинка з помилкою стає червоною. Програма пише, що не так, і номер символу з помилкою (символ позначено ▶). Помилки обчислення: ділення на нуль, від'ємний степінь, посилання на неіснуючу клітинку, циклічне посилання (A1 посилається на B1, а B1 — на A1)." />
+
+                <Label Text="Рядки, стовпці, файли" FontSize="18" FontAttributes="Bold" Margin="0,12,0,0" />
+                <Label Text="«+ Рядок» / «+ Стовпець» додають рядок або стовпець у кінець, «− Рядок» / «− Стовпець» видаляють останній. «Зберегти» і «Відкрити» просять вказати ім'я файлу або повний шлях; таблиця зберігається у форматі JSON." />
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <Button Grid.Row="1" Text="Закрити" HorizontalOptions="End" Clicked="OnCloseClicked" />
+    </Grid>
+
+</ContentPage>
