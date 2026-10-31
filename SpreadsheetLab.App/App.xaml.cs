@@ -1,17 +1,20 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿namespace SpreadsheetLab.App;
 
-namespace SpreadsheetLab.App
+public partial class App : Application
 {
-    public partial class App : Application
+    public App()
     {
-        public App()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+    }
 
-        protected override Window CreateWindow(IActivationState? activationState)
+    // Main window: title and size
+    protected override Window CreateWindow(IActivationState? activationState)
+    {
+        return new Window(new AppShell())
         {
-            return new Window(new AppShell());
-        }
+            Title = "Електронні таблиці — ЛР №1, варіант 46",
+            Width = 1280,
+            Height = 820
+        };
     }
 }
