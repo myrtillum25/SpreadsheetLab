@@ -22,8 +22,4 @@
     </Antlr4>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
-
 </Project>
