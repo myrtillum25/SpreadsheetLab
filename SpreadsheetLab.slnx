@@ -1,3 +1,6 @@
 <Solution>
-  <Project Path="SpreadsheetLab.App/SpreadsheetLab.App.csproj" />
+  <Project Path="SpreadsheetLab.App/SpreadsheetLab.App.csproj">
+    <Deploy Solution="Debug|*" />
+  </Project>
+  <Project Path="SpreadsheetLab.Core/SpreadsheetLab.Core.csproj" />
 </Solution>
