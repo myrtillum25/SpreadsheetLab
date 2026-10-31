@@ -7,10 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Evaluation\" />
-    <Folder Include="Grammar\" />
-    <Folder Include="Services\" />
-    <Folder Include="Parsing\" />
+    <!-- ANTLR runtime -->
+    <PackageReference Include="Antlr4.Runtime.Standard" Version="4.13.1" />
+    <!-- Generates lexer/parser/visitor from .g4 on build -->
+    <PackageReference Include="Antlr4BuildTasks" Version="12.14.0" PrivateAssets="all" IncludeAssets="build" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Grammar file -->
+    <Antlr4 Include="Grammar\LabCalculator.g4">
+      <Package>SpreadsheetLab.Core.Grammar</Package>
+      <Visitor>true</Visitor>
+      <Listener>false</Listener>
+    </Antlr4>
   </ItemGroup>
 
 </Project>
