@@ -57,23 +57,24 @@ public class ExpressionParser
         }
 
         // Variant 46: result must be logical
-        if (!IsComparison(tree.expression()))
+        if (!IsLogical(tree.expression()))
         {
-            ErrorMessage = "Вираз має бути логічним: додайте порівняння (=, <, >, <=, >=, <>). Наприклад: A1 + 2 > 5";
+            ErrorMessage = "Вираз має бути логічним: порівняння (=, <, >, <=, >=, <>) або ім'я клітинки. " +
+                           "Наприклад: A1 + 2 > 5 або B3";
             ErrorPosition = text.Length + 1;
             return null;
         }
-
         return tree;
     }
 
-    // Is the main operation a comparison? (skip outer brackets)
-    private static bool IsComparison(LabCalculatorParser.ExpressionContext expression)
+    // Logical = comparison or cell name (outer brackets are skipped)
+    private static bool IsLogical(LabCalculatorParser.ExpressionContext expression)
     {
         while (expression is LabCalculatorParser.ParenthesizedExprContext parenthesized)
             expression = parenthesized.expression();
 
-        return expression is LabCalculatorParser.ComparisonExprContext;
+        return expression is LabCalculatorParser.ComparisonExprContext
+            || expression is LabCalculatorParser.IdentifierExprContext;
     }
 
     // All cell names used in the tree
