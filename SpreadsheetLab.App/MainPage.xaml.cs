@@ -344,18 +344,13 @@ public partial class MainPage : ContentPage
         if (!await ConfirmUnsavedChanges())
             return;
 
-        string? path = await AskFilePath("Відкриття таблиці", "Відкрити", fileService.LastFilePath ?? "");
-        if (path == null)
-            return; // cancelled
-
-        if (!File.Exists(path))
-        {
-            await DisplayAlertAsync("Відкриття таблиці", $"Файл не знайдено:\n{path}", "OK");
-            return;
-        }
-
         try
         {
+            // Explorer window
+            string? path = await FileDialogs.PickFileToOpen();
+            if (path == null)
+                return; // cancelled
+
             table = fileService.LoadFromFile(path);
         }
         catch (Exception ex)
@@ -370,20 +365,32 @@ public partial class MainPage : ContentPage
 
     private async void OnSaveClicked(object? sender, EventArgs e)
     {
-        await SaveTable();
+        await SaveTable(chooseFile: false);
+    }
+
+    private async void OnSaveAsClicked(object? sender, EventArgs e)
+    {
+        await SaveTable(chooseFile: true);
     }
 
     // true if saved
-    private async Task<bool> SaveTable()
+    // chooseFile = false: save to the current file (window only for a new table)
+    private async Task<bool> SaveTable(bool chooseFile)
     {
-        string suggested = fileService.LastFilePath ?? Path.Combine(DefaultFolder(), "таблиця.json");
-
-        string? path = await AskFilePath("Збереження таблиці", "Зберегти", suggested);
-        if (path == null)
-            return false;
+        string? path = fileService.LastFilePath;
 
         try
         {
+            if (chooseFile || path == null)
+            {
+                string suggestedName = path == null ? "таблиця" : Path.GetFileNameWithoutExtension(path);
+
+                // Explorer window
+                path = await FileDialogs.PickFileToSave(suggestedName);
+                if (path == null)
+                    return false; // cancelled
+            }
+
             fileService.SaveToFile(table, path);
         }
         catch (Exception ex)
@@ -397,24 +404,6 @@ public partial class MainPage : ContentPage
         return true;
     }
 
-    // Ask file name / path (null if cancelled)
-    private async Task<string?> AskFilePath(string title, string acceptButton, string initialValue)
-    {
-        string? input = await DisplayPromptAsync(title,
-            "Вкажіть ім'я файлу або повний шлях.\nЯкщо вказати лише ім'я, файл буде в папці «Документи».",
-            acceptButton, "Скасувати", initialValue: initialValue);
-
-        if (string.IsNullOrWhiteSpace(input))
-            return null;
-
-        return FileService.ResolvePath(input, DefaultFolder());
-    }
-
-    private static string DefaultFolder()
-    {
-        return Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-    }
-
     // true = can continue
     private async Task<bool> ConfirmUnsavedChanges()
     {
@@ -426,7 +415,7 @@ public partial class MainPage : ContentPage
             "Скасувати", null, "Зберегти", "Не зберігати");
 
         if (choice == "Зберегти")
-            return await SaveTable();
+            return await SaveTable(chooseFile: false);
 
         return choice == "Не зберігати";
     }

@@ -13,6 +13,7 @@
                 <Button Text="Нова" Clicked="OnNewClicked" />
                 <Button Text="Відкрити" Clicked="OnOpenClicked" />
                 <Button Text="Зберегти" Clicked="OnSaveClicked" />
+                <Button Text="Зберегти як…" Clicked="OnSaveAsClicked" />
                 <Button Text="+ Рядок" Clicked="OnAddRowClicked" />
                 <Button Text="− Рядок" Clicked="OnDeleteRowClicked" />
                 <Button Text="+ Стовпець" Clicked="OnAddColumnClicked" />

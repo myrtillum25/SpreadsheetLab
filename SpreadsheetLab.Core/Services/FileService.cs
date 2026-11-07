@@ -80,20 +80,6 @@ public class FileService
         return table;
     }
 
-    // "table" -> "C:\Users\...\Documents\table.json"
-    public static string ResolvePath(string input, string defaultFolder)
-    {
-        string path = input.Trim().Trim('"');
-
-        if (!Path.HasExtension(path))
-            path += FileExtension;
-
-        if (!Path.IsPathRooted(path))
-            path = Path.Combine(defaultFolder, path);
-
-        return path;
-    }
-
     // File structure
     private class TableFile
     {
