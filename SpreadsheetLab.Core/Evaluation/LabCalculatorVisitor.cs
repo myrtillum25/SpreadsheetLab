@@ -92,12 +92,23 @@ public class LabCalculatorVisitor : LabCalculatorBaseVisitor<BigInteger>
         BigInteger right = WalkRight(context);
         int position = Position(context.EXPONENT().Symbol);
 
-        if (right < 0)
-            throw new EvaluationException("Від'ємний степінь не підтримується (результат не ціле число)", position);
-        if (right > MaxExponent)
-            throw new EvaluationException($"Занадто великий показник степеня (максимум {MaxExponent})", position);
+        if (BigInteger.Abs(right) > MaxExponent)
+            throw new EvaluationException($"Занадто великий показник степеня (від -{MaxExponent} до {MaxExponent})", position);
 
-        return BigInteger.Pow(left, (int)right);
+        if (right >= 0)
+            return BigInteger.Pow(left, (int)right);
+
+        // Negative power: a^(-n) = 1 / a^n (integer division, like 7 / 2 = 3)
+        if (left == 0)
+            throw new EvaluationException("Ділення на нуль: 0 у від'ємному степені", position);
+
+        return BigInteger.One / BigInteger.Pow(left, (int)(-right));
+    }
+
+    // -a
+    public override BigInteger VisitUnaryMinusExpr(LabCalculatorParser.UnaryMinusExprContext context)
+    {
+        return -Visit(context.expression());
     }
 
     // a = b, a <> b, a < b, a > b, a <= b, a >= b  ->  1 or 0

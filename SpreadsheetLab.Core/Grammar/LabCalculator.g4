@@ -12,6 +12,7 @@ compileUnit : EQUAL? expression EOF ;
 expression
     : LPAREN expression RPAREN                                         #ParenthesizedExpr
     | <assoc=right> expression EXPONENT expression                     #ExponentialExpr
+    | SUBTRACT expression                                              #UnaryMinusExpr
     | expression operatorToken=(MULTIPLY | DIVIDE) expression          #MultiplicativeExpr
     | expression operatorToken=(ADD | SUBTRACT) expression             #AdditiveExpr
     | expression operatorToken=(EQUAL | NOT_EQUAL | LESS | GREATER | LESS_EQUAL | GREATER_EQUAL) expression   #ComparisonExpr
