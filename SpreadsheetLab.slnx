@@ -6,4 +6,5 @@
     <Deploy Solution="Debug|*" />
   </Project>
   <Project Path="SpreadsheetLab.Core/SpreadsheetLab.Core.csproj" />
+  <Project Path="SpreadsheetLab.Tests/SpreadsheetLab.Tests.csproj" Id="267079d0-c702-4858-821a-e5951906e74a" />
 </Solution>
